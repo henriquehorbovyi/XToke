@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.MainController">
+   <children>
+      <Pane fx:id="pane" layoutX="4.0" prefHeight="650.0" prefWidth="1000.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <MenuBar layoutX="-13.0" prefHeight="29.0" prefWidth="1015.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <TableView fx:id="tvProducts" layoutY="73.0" prefHeight="517.0" prefWidth="984.0">
+              <columns>
+                <TableColumn fx:id="codeCol" prefWidth="133.0" text="Código" />
+                <TableColumn fx:id="nameCol" prefWidth="232.0" text="Nome" />
+                  <TableColumn fx:id="descripCol" prefWidth="481.0" text="Descrição" />
+                  <TableColumn fx:id="priceCol" prefWidth="137.0" text="Preço" />
+              </columns>
+            </TableView>
+            <TextField layoutX="722.0" layoutY="39.0" promptText="Pesquisar" />
+            <Button layoutX="903.0" layoutY="39.0" mnemonicParsing="false" text="Pesquisar" />
+            <ChoiceBox fx:id="choiceBoxSearch" layoutX="562.0" layoutY="39.0" prefWidth="150.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

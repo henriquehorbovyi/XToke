@@ -9,12 +9,13 @@ import javafx.stage.Stage;
 public class Main extends Application {
     static Stage mStage;
 
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.mStage = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/main_scene.fxml"));
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 1000, 650));
         primaryStage.setResizable(false);
         primaryStage.show();
     }
