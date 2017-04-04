@@ -1,11 +1,6 @@
 package app.dao;
-
-import com.mysql.jdbc.*;
-import com.mysql.jdbc.PreparedStatement;
-
 import java.sql.*;
 import java.sql.Connection;
-
 /**
  * Created by henry on 03/04/17.
  */
