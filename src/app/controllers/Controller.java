@@ -3,8 +3,7 @@ package app;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.FlowPane;
-
+import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -12,7 +11,7 @@ public class Controller implements Initializable{
 
 
     @FXML
-    private FlowPane rootPane;
+    private AnchorPane rootPane;
 
 
     @Override
@@ -23,9 +22,10 @@ public class Controller implements Initializable{
     @FXML
     private void loadSecondScene(){
         try {
-            FlowPane pane = FXMLLoader.load(getClass().getResource("secondScene.fxml"));
+            AnchorPane pane = FXMLLoader.load(getClass().getResource("secondScene.fxml"));
+            String id = rootPane.getChildren().remove(0).getId();
+            System.out.println(id);
             rootPane.getChildren().addAll(pane);
-            //Main.mStage.setTitle();
         }catch (Exception e){
             e.printStackTrace();
         }

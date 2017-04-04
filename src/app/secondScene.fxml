@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.FlowPane?>
-
-<FlowPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.SecondSceneController">
-   <children>
-      <Label layoutX="201.0" layoutY="192.0" text="Welcome to the Second Scene" />
-   </children>
-</FlowPane>
