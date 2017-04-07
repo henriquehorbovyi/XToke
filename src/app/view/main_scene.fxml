@@ -19,7 +19,7 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem mnemonicParsing="false" text="Sair" onAction="#exit"/>
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
@@ -45,6 +45,8 @@
             <TextField layoutX="722.0" layoutY="39.0" promptText="Pesquisar" />
             <Button layoutX="903.0" layoutY="39.0" mnemonicParsing="false" text="Pesquisar" />
             <ComboBox fx:id="cbSearchBy" layoutX="562.0" layoutY="39.0" prefWidth="150.0" promptText="Pesquisar por" />
+            <Button fx:id="btnRefresh" layoutX="757.0" layoutY="602.0" mnemonicParsing="false" onAction="#refreshTable" text="Atualizar" />
+            <Button layoutX="850.0" layoutY="602.0" mnemonicParsing="false" text="Button" />
          </children>
       </Pane>
    </children>

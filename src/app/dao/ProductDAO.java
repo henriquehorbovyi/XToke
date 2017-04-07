@@ -5,6 +5,7 @@ import com.mysql.jdbc.PreparedStatement;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,11 +14,27 @@ import java.util.List;
 public class ProductDAO {
 
     public static void save(){
+        //TODO: O METODO INTEIRO
+    }
 
-    }
     public static List<Product> list(){
-        return null;
+        String query = "SELECT * FROM products";
+        List<Product> products = new ArrayList<>();
+        try {
+            PreparedStatement statement = (PreparedStatement) new MyConnection().connect().prepareStatement(query);
+            ResultSet result            = statement.executeQuery();
+            while(result.next()){
+                Product p = new Product(result.getString("name"),result.getString("description"),
+                        result.getString("barcode"),result.getDouble("price"));
+                p.setId(result.getInt("id"));
+                products.add(p);
+            }
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+        return products;
     }
+
     //SEARCH
     public static List<Product> search(int id){
         String query        = "SELECT * FROM products WHERE id = ?";
@@ -43,6 +60,5 @@ public class ProductDAO {
 
 
     //SEARCH
-
 
 }

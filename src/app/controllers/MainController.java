@@ -1,5 +1,7 @@
 package app.controllers;
 
+import app.dao.MyConnection;
+import app.dao.ProductDAO;
 import app.model.Product;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -8,19 +10,22 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 
+import javax.swing.*;
 import java.net.URL;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable{
 
 
     @FXML private AnchorPane rootPane;
-    @FXML private ChoiceBox  choiceBoxSearch;
+    @FXML private ComboBox cbSearchBy;
 
     @FXML private TableView  tvProducts;
     @FXML private TableColumn<Product, String> codeCol;
@@ -31,24 +36,30 @@ public class MainController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setTableView();
+        fillTableView();
+        fillComboBoxSearch();
     }
 
-    private void setTableView(){
-        //TODO: GET VALUES FROM DB...
-        final ObservableList<Product> data = FXCollections.observableArrayList(
-                new Product("PRODUTO 1", "LOREM 1", "qwedadfsgsgda", 200.3),
-                new Product("PRODUTO 2", "LOREM 2", "wefsfbdgjtfsgh", 244.00),
-                new Product("PRODUTO 3", "LOREM 3", "43546ywrgddfafa", 30.10),
-                new Product("PRODUTO 4", "LOREM 4", "wfhhfgsgndgh", 20.00)
-        );
+
+    private void fillComboBoxSearch(){
+        ObservableList<String> list = FXCollections.observableArrayList("Código","Nome","Descrição","Preço");
+        cbSearchBy.setItems(list);
+    }
+
+    private void fillTableView(){
+        final ObservableList<Product> data = FXCollections.observableArrayList(ProductDAO.list());
         codeCol.setCellValueFactory(cellValue -> cellValue.getValue().getBarcode());
         nameCol.setCellValueFactory(cellValue -> cellValue.getValue().getName());
         descripCol.setCellValueFactory(cellValue -> cellValue.getValue().getDescription());
         priceCol.setCellValueFactory(cellValue -> cellValue.getValue().getPrice());
-
         tvProducts.setItems(data);
     }
+
+    @FXML
+    private void refreshTable(){
+        fillTableView();
+    }
+
 
 
     @FXML
@@ -61,5 +72,20 @@ public class MainController implements Initializable{
             e.printStackTrace();
         }
     }
+
+
+    @FXML
+    private void exit(){
+        Alert alertExit = new Alert(Alert.AlertType.CONFIRMATION);
+        alertExit.setTitle(null);
+        alertExit.setHeaderText(null);
+        alertExit.setContentText("Deseja realmente sair?");
+
+
+        Optional<ButtonType> result = alertExit.showAndWait();
+        if (result.get() == ButtonType.OK) System.exit(0);
+
+    }
+
 
 }
