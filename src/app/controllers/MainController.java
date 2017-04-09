@@ -1,10 +1,7 @@
 package app.controllers;
 
-import app.dao.MyConnection;
 import app.dao.ProductDAO;
 import app.model.Product;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,17 +9,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
-
-import javax.swing.*;
 import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable{
 
+
+    private static int INITIAL_NUMBER_OF_PRODUCTS = 0;
 
     @FXML private AnchorPane rootPane;
     @FXML private ComboBox cbSearchBy;
@@ -36,7 +30,7 @@ public class MainController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        fillTableView();
+        fillTableView(INITIAL_NUMBER_OF_PRODUCTS);
         fillComboBoxSearch();
     }
 
@@ -46,8 +40,8 @@ public class MainController implements Initializable{
         cbSearchBy.setItems(list);
     }
 
-    private void fillTableView(){
-        final ObservableList<Product> data = FXCollections.observableArrayList(ProductDAO.list());
+    private void fillTableView(int lastId){
+        final ObservableList<Product> data = FXCollections.observableArrayList(ProductDAO.list(lastId));
         codeCol.setCellValueFactory(cellValue -> cellValue.getValue().getBarcode());
         nameCol.setCellValueFactory(cellValue -> cellValue.getValue().getName());
         descripCol.setCellValueFactory(cellValue -> cellValue.getValue().getDescription());
@@ -56,8 +50,17 @@ public class MainController implements Initializable{
     }
 
     @FXML
+    private void addMoreItemsTable(){
+        ObservableList<Product> data = tvProducts.getItems();
+        int lastId = 0;
+        for (int i = 0; i < data.size(); i++) lastId = data.get(i).getId();
+        final ObservableList<Product> res = FXCollections.observableArrayList(ProductDAO.list(lastId));
+        if(res.size() > 0) tvProducts.getItems().addAll(res);
+    }
+
+    @FXML
     private void refreshTable(){
-        fillTableView();
+        fillTableView(INITIAL_NUMBER_OF_PRODUCTS);
     }
 
 

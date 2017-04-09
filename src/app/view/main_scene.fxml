@@ -17,24 +17,24 @@
          <children>
             <MenuBar layoutX="-13.0" prefHeight="29.0" prefWidth="1015.0">
               <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu mnemonicParsing="false" text="Arquivo">
                   <items>
                     <MenuItem mnemonicParsing="false" text="Sair" onAction="#exit"/>
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
+                <Menu mnemonicParsing="false" text="Editar">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem mnemonicParsing="false" text="Excluir"  />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Help">
+                <Menu mnemonicParsing="false" text="Ajuda">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem mnemonicParsing="false" text="Sobre" />
                   </items>
                 </Menu>
               </menus>
             </MenuBar>
-            <TableView fx:id="tvProducts" layoutY="73.0" prefHeight="517.0" prefWidth="984.0">
+            <TableView fx:id="tvProducts" layoutY="73.0" prefHeight="517.0" prefWidth="984.0" onScroll="#addMoreItemsTable">
               <columns>
                 <TableColumn fx:id="codeCol" prefWidth="133.0" text="Código" />
                 <TableColumn fx:id="nameCol" prefWidth="232.0" text="Nome" />

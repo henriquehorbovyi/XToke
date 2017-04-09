@@ -13,15 +13,19 @@ import java.util.List;
  */
 public class ProductDAO {
 
+    private static final int DATA_LISTING_REASON = 20;
+
     public static void save(){
         //TODO: O METODO INTEIRO
     }
 
-    public static List<Product> list(){
-        String query = "SELECT * FROM products";
+    public static List<Product> list(int lastId){
+        String query = "select * from products where id > ? and id <= ?";
         List<Product> products = new ArrayList<>();
         try {
             PreparedStatement statement = (PreparedStatement) new MyConnection().connect().prepareStatement(query);
+            statement.setInt(1,lastId);
+            statement.setInt(2,lastId + DATA_LISTING_REASON);
             ResultSet result            = statement.executeQuery();
             while(result.next()){
                 Product p = new Product(result.getString("name"),result.getString("description"),
@@ -30,7 +34,7 @@ public class ProductDAO {
                 products.add(p);
             }
         }catch (SQLException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return products;
     }
