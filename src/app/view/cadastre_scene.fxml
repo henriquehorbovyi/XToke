@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="parent" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.SecondSceneController">
+<AnchorPane fx:id="parent" prefHeight="400.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CadastreSceneController">
    <children>
-      <Label layoutX="282.0" layoutY="161.0" text="Label" />
+      <TextField fx:id="tfCode" layoutX="11.0" layoutY="77.0" prefHeight="26.0" prefWidth="608.0" promptText="Código" />
+      <Label layoutX="11.0" layoutY="58.0" text="Código" />
+      <Label layoutX="11.0" layoutY="113.0" text="Nome" />
+      <TextField fx:id="tfName" layoutX="11.0" layoutY="131.0" prefHeight="26.0" prefWidth="608.0" promptText="Nome" />
+      <TextField fx:id="tfPrice" layoutX="11.0" layoutY="187.0" prefHeight="26.0" prefWidth="608.0" promptText="R$ 0,00" />
+      <Label layoutX="11.0" layoutY="166.0" text="Preço" />
+      <Label layoutX="13.0" layoutY="223.0" text="Descrição" />
+      <TextArea fx:id="taDescription" layoutX="13.0" layoutY="246.0" prefHeight="103.0" prefWidth="608.0" promptText="Sua descriçao do produto" />
+      <Label layoutX="214.0" layoutY="20.0" text="Cadastre um novo produto">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button layoutX="455.0" layoutY="363.0" mnemonicParsing="false" onAction="#clean" prefHeight="26.0" prefWidth="76.0" style="-fx-background-color: #9F9F9F;" text="Limpar" textFill="WHITE" />
+      <Button layoutX="541.0" layoutY="363.0" mnemonicParsing="false" onAction="#cancel" prefHeight="26.0" prefWidth="76.0" style="-fx-background-color: #DF3464;" text="Cancelar" textFill="WHITE" />
+      <Button layoutX="369.0" layoutY="362.0" mnemonicParsing="false" onAction="#save" prefHeight="26.0" prefWidth="76.0" style="-fx-background-color: #23AF96;" text="Salvar" textFill="WHITE" />
+
    </children>
 </AnchorPane>

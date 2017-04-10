@@ -15,8 +15,20 @@ public class ProductDAO {
 
     private static final int DATA_LISTING_REASON = 20;
 
-    public static void save(){
-        //TODO: O METODO INTEIRO
+    public static int save(String code,String name,String price,String description){
+        String query = "insert into products (codigo,nome,preco,descricao) values(?,?,?,?)";
+        int check = 0;
+        try {
+            PreparedStatement statement = (PreparedStatement) new MyConnection().connect().prepareStatement(query);
+            statement.setString(1,code);
+            statement.setString(2,name);
+            statement.setString(3,price);
+            statement.setString(4,description);
+            check = statement.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return check;
     }
 
     public static List<Product> list(int lastId){
@@ -28,8 +40,8 @@ public class ProductDAO {
             statement.setInt(2,lastId + DATA_LISTING_REASON);
             ResultSet result            = statement.executeQuery();
             while(result.next()){
-                Product p = new Product(result.getString("name"),result.getString("description"),
-                        result.getString("barcode"),result.getDouble("price"));
+                Product p = new Product(result.getString("nome"),result.getString("descricao"),
+                        result.getString("codigo"),result.getString("preco"));
                 p.setId(result.getInt("id"));
                 products.add(p);
             }
@@ -40,29 +52,54 @@ public class ProductDAO {
     }
 
     //SEARCH
-    public static List<Product> search(int id){
-        String query        = "SELECT * FROM products WHERE id = ?";
-        List<Product> list  =  null;
+    public static boolean checkIfExist(String code){
+        boolean exist = false;
+        String query = "select codigo from products where codigo = ?";
+        try{
+            PreparedStatement statement = (PreparedStatement)  new MyConnection().connect().prepareStatement(query);
+            statement.setString(1,code);
+            ResultSet res               = statement.executeQuery();
+            exist                       = res.next();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return exist;
+    }
+
+
+    public static Product search(int id){
+        String query        = "select * from products where id = ?";
+        Product product     =  null;
         try {
             PreparedStatement statement = (PreparedStatement) new MyConnection().connect().prepareStatement(query);
             ResultSet result                      = statement.executeQuery();
             while (result.next()){
-                Product p = new Product(result.getString("name"),result.getString("description")
-                        ,result.getString("barcode"),result.getDouble("price"));
+                Product p = new Product(result.getString("nome"),result.getString("descricao")
+                        ,result.getString("codigo"),result.getString("preco"));
+                p.setId(id);
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return product;
     }
-    public static List<Product> search(String nameOrDescription){
-        return null;
+    public static List<Product> search(String col, String value){
+        List<Product> list   = new ArrayList<>();
+        String query = "select * from products where "+col+" like '"+value+"%' ";
+        try {
+            PreparedStatement statement = (PreparedStatement) new MyConnection().connect().prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+            while(result.next()){
+                Product p = new Product(result.getString("nome"),result.getString("descricao")
+                        ,result.getString("codigo"),result.getString("preco"));
+                p.setId(result.getInt("id"));
+                list.add(p);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return list;
     }
-    public static List<Product> search(Double price){
-        return null;
-    }
-
-
     //SEARCH
 
 }

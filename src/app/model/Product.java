@@ -12,14 +12,14 @@ public class Product {
     private StringProperty name;
     private StringProperty description;
     private StringProperty barcode;
-    private ObjectProperty<Double> price;
+    private StringProperty price;
 
     public Product(){}
-    public Product(String name, String description,String barcode, Double price){
+    public Product(String name, String description,String barcode, String price){
         this.name           = new SimpleStringProperty(name);
         this.description    = new SimpleStringProperty(description);
         this.barcode        = new SimpleStringProperty(barcode);
-        this.price          = new SimpleObjectProperty<Double>(price);
+        this.price          = new SimpleStringProperty(price);
     }
 
     public int getId() {
@@ -53,11 +53,11 @@ public class Product {
         this.barcode = new SimpleStringProperty(barcode);
     }
 
-    public ObjectProperty<Double> getPrice() {
+    public StringProperty getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
-        this.price = new SimpleObjectProperty(price);
+    public void setPrice(String price) {
+        this.price = new SimpleStringProperty(price);
     }
 }
