@@ -2,34 +2,34 @@ package app.controllers;
 import app.dao.ProductDAO;
 import app.model.Product;
 import app.utils.MySceneManager;
-import javafx.beans.Observable;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import sun.security.jca.GetInstance;
 
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 public class MainController implements Initializable{
 
-
+    protected static Product product;
     private static int INITIAL_NUMBER_OF_PRODUCTS = 0;
 
-    @FXML private AnchorPane    rootPane;
     @FXML private ComboBox      cbSearchBy;
     @FXML private TextField     searchField;
+    @FXML private AnchorPane    rootPane;
+    @FXML private TableView     tvProducts;
 
-    @FXML private TableView  tvProducts;
+    @FXML private TableColumn<Product, String> id;
     @FXML private TableColumn<Product, String> codeCol;
     @FXML private TableColumn<Product, String> nameCol;
     @FXML private TableColumn<Product, String> descripCol;
     @FXML private TableColumn<Product, String> priceCol;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,8 +46,10 @@ public class MainController implements Initializable{
 
     private void fillTableView(int lastId){
         final ObservableList<Product> data = FXCollections.observableArrayList(ProductDAO.list(lastId));
-        codeCol.setCellValueFactory(cellValue -> cellValue.getValue().getBarcode());
-        nameCol.setCellValueFactory(cellValue -> cellValue.getValue().getName());
+
+        id      .setCellValueFactory(cellValue -> cellValue.getValue().getId() );
+        codeCol .setCellValueFactory(cellValue -> cellValue.getValue().getBarcode());
+        nameCol .setCellValueFactory(cellValue -> cellValue.getValue().getName());
         descripCol.setCellValueFactory(cellValue -> cellValue.getValue().getDescription());
         priceCol.setCellValueFactory(cellValue -> cellValue.getValue().getPrice());
         tvProducts.setItems(data);
@@ -56,11 +58,12 @@ public class MainController implements Initializable{
             TableRow<Product> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-                    Product p = row.getItem();
+                    Product product = row.getItem();
+                    this.product = product;
                     loadEditItemScene();
                 }
             });
-            return row ;
+            return row;
         });
 
     }
@@ -79,7 +82,7 @@ public class MainController implements Initializable{
     private void addMoreItemsTable(){
         ObservableList<Product> data = tvProducts.getItems();
         int lastId = 0;
-        for (int i = 0; i < data.size(); i++) lastId = data.get(i).getId();
+        for (int i = 0; i < data.size(); i++) lastId = Integer.parseInt(data.get(i).getId().get());
         final ObservableList<Product> res = FXCollections.observableArrayList(ProductDAO.list(lastId));
         if(res.size() > 0) tvProducts.getItems().addAll(res);
     }

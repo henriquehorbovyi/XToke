@@ -2,6 +2,7 @@ package app.dao;
 
 import app.model.Product;
 import com.mysql.jdbc.PreparedStatement;
+import javafx.beans.property.StringProperty;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,8 +43,9 @@ public class ProductDAO {
             while(result.next()){
                 Product p = new Product(result.getString("nome"),result.getString("descricao"),
                         result.getString("codigo"),result.getString("preco"));
-                p.setId(result.getInt("id"));
+                p.setId(String.valueOf(result.getInt("id")));
                 products.add(p);
+
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -76,7 +78,7 @@ public class ProductDAO {
             while (result.next()){
                 Product p = new Product(result.getString("nome"),result.getString("descricao")
                         ,result.getString("codigo"),result.getString("preco"));
-                p.setId(id);
+                p.setId(String.valueOf(id));
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -92,7 +94,7 @@ public class ProductDAO {
             while(result.next()){
                 Product p = new Product(result.getString("nome"),result.getString("descricao")
                         ,result.getString("codigo"),result.getString("preco"));
-                p.setId(result.getInt("id"));
+                p.setId(String.valueOf(result.getInt("id")));
                 list.add(p);
             }
         }catch (Exception e){
@@ -101,5 +103,4 @@ public class ProductDAO {
         return list;
     }
     //SEARCH
-
 }

@@ -1,18 +1,15 @@
 package app.model;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 /**
  * Created by henry on 03/04/17.
  */
 public class Product {
-    private int id;
-    private StringProperty name;
-    private StringProperty description;
-    private StringProperty barcode;
-    private StringProperty price;
+    private StringProperty  id;
+    private StringProperty  name;
+    private StringProperty  description;
+    private StringProperty  barcode;
+    private StringProperty  price;
 
     public Product(){}
     public Product(String name, String description,String barcode, String price){
@@ -22,12 +19,12 @@ public class Product {
         this.price          = new SimpleStringProperty(price);
     }
 
-    public int getId() {
+    public StringProperty getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = new SimpleStringProperty(id);
     }
 
     public StringProperty getName() {
