@@ -87,13 +87,7 @@ public class MySceneManager {
     }
 
     private static void positionCaret(final TextField textField) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                // Posiciona o cursor sempre a direita.
-                textField.positionCaret(textField.getText().length());
-            }
-        });
+        Platform.runLater(() -> { textField.positionCaret(textField.getText().length()); });
     }
 
 

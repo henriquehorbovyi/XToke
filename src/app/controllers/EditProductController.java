@@ -1,52 +1,1 @@
-package app.controllers;
-
-import app.dao.ProductDAO;
-import app.model.Product;
-import app.utils.MySceneManager;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-
-import java.net.URL;
-import java.util.ResourceBundle;
-
-/**
- * Created by henry on 10/04/17.
- */
-public class EditProductController implements Initializable{
-
-
-    private Product product;
-
-    @FXML private TextField tfCode;
-    @FXML private TextField tfName;
-    @FXML private TextField tfPrice;
-    @FXML private TextArea  taDescription;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        MySceneManager.monetaryField(tfPrice);
-        this.product = MainController.product;
-        fillFields();
-    }
-
-    @FXML
-    private void cancel(Event e) {((Node)e.getSource()).getScene().getWindow().hide();}
-
-    @FXML
-    private void update(ActionEvent actionEvent) {
-    }
-
-    private void fillFields(){
-        System.out.println("ID > "+product.getId().get());
-        this.tfCode         .setText(product.getBarcode().get());
-        this.tfName         .setText(product.getName().get());
-        this.tfPrice        .setText(product.getPrice().get());
-        this.taDescription  .setText(product.getDescription().get());
-    }
-
-}
+package app.controllers;import app.dao.ProductDAO;import app.model.Product;import app.utils.MySceneManager;import app.utils.PushNotifications;import app.utils.Strings;import javafx.event.Event;import javafx.fxml.FXML;import javafx.fxml.Initializable;import javafx.scene.Node;import javafx.scene.control.TextArea;import javafx.scene.control.TextField;import java.net.URL;import java.util.Arrays;import java.util.ResourceBundle;/** * Created by henry on 10/04/17. */public class EditProductController implements Initializable{    private Product product;    @FXML private TextField tfCode;    @FXML private TextField tfName;    @FXML private TextField tfPrice;    @FXML private TextArea  taDescription;    @Override    public void initialize(URL location, ResourceBundle resources) {        MySceneManager.monetaryField(tfPrice);        this.product = MainController.product;        fillFields();    }    @FXML    private void cancel(Event e) {((Node)e.getSource()).getScene().getWindow().hide();}    @FXML    private void update(Event e) {        String code         = tfCode.getText();        String name         = tfName.getText();        String price        = tfPrice.getText();        String descrip      = taDescription.getText();        Product nproduct    = new Product(name,descrip,code,price);        nproduct.setId(product.getId().get());        if(code.trim().isEmpty() || name.trim().isEmpty() || price.trim().isEmpty() || descrip.trim().isEmpty()){            new PushNotifications().notify(Strings.APP_NAME,                    "Preencha todos os campos!",                    "assets/alert.png").show();        }else{            if(code.equalsIgnoreCase(product.getBarcode().get()) &&                    name.equalsIgnoreCase(product.getName().get()) &&                    price.equalsIgnoreCase(product.getPrice().get()) &&                    descrip.equalsIgnoreCase(product.getDescription().get())){                new PushNotifications().notify(Strings.APP_NAME,                        "Você não fez nenhuma alteração!",                        "assets/alert.png").show();            }else{                 if(ProductDAO.update(nproduct) > 0){                     new PushNotifications().notify(Strings.APP_NAME,                             "Produto alterado com sucesso!",                             "assets/success.png").show();                 }else{                     new PushNotifications().notify(Strings.APP_NAME,                             "Erro ao alterar!",                             "assets/alert.png").show();                 }            }        }    }    private void fillFields(){        this.tfCode         .setText(product.getBarcode().get());        this.tfName         .setText(product.getName().get());        this.tfPrice        .setText(product.getPrice().get());        this.taDescription  .setText(product.getDescription().get());    }}

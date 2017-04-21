@@ -3,6 +3,7 @@ package app.controllers;
 import app.dao.ProductDAO;
 import app.utils.MySceneManager;
 import app.utils.PushNotifications;
+import app.utils.Strings;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -41,7 +42,7 @@ public class CadastreSceneController implements Initializable {
             String price        = tfPrice.getText();
             String description  = taDescription.getText();
             if(ProductDAO.save(code,name,price,description) == 1){
-                 new PushNotifications().notify("Sistema de Estoque",
+                 new PushNotifications().notify(Strings.APP_NAME,
                         "Produto cadastrado com sucesso!",
                         "assets/success.png").show();
                 clean();
@@ -51,7 +52,7 @@ public class CadastreSceneController implements Initializable {
 
 
         }else{
-            new PushNotifications().notify("Sistema de Estoque",
+            new PushNotifications().notify(Strings.APP_NAME,
                     "Produto já existe!",
                     "assets/alert.png").show();
         }

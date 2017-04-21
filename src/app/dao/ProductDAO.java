@@ -103,4 +103,22 @@ public class ProductDAO {
         return list;
     }
     //SEARCH
+
+    public static int update(Product product) {
+        String query = "update products set codigo=?, nome=?, preco=?, descricao=? where id = ?";
+        int updated  = 0;
+        try{
+            PreparedStatement statement = (PreparedStatement) new MyConnection().connect().prepareStatement(query);
+            statement.setString(1 , product.getBarcode().get());
+            statement.setString(2 , product.getName().get());
+            statement.setString(3 , product.getPrice().get());
+            statement.setString(4 , product.getDescription().get());
+            statement.setInt(5    , Integer.parseInt(product.getId().get()));
+            System.out.println(product.getBarcode().get());
+            updated = statement.executeUpdate();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return updated;
+    }
 }
